@@ -829,15 +829,51 @@
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
     const geometry = new THREE.PlaneGeometry(20, 20, 40, 40);
-    const material = new THREE.MeshBasicMaterial({
-        color: 0x22c55e,
-        wireframe: true
+
+    // Optimized: Use ShaderMaterial to handle animation on GPU
+    const vertexShader = `
+        uniform float uTime;
+        uniform vec2 uMouse;
+        varying vec2 vUv;
+
+        void main() {
+            vUv = uv;
+            vec3 newPos = position;
+
+            // Base wave
+            float baseWave = sin(position.x * 0.5 + uTime * 0.5) * 0.1 + sin(position.y * 0.5 + uTime * 0.5) * 0.1;
+
+            // Ripple
+            float dist = distance(position.xy, uMouse);
+            float influence = max(0.0, 1.0 - dist / 5.0);
+            float ripple = sin(dist * 2.0 - uTime * 2.0) * influence * 0.3;
+
+            newPos.z = baseWave + ripple;
+
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(newPos, 1.0);
+        }
+    `;
+
+    const fragmentShader = `
+        void main() {
+            gl_FragColor = vec4(0.133, 0.773, 0.369, 1.0); // #22c55e
+        }
+    `;
+
+    const material = new THREE.ShaderMaterial({
+        vertexShader: vertexShader,
+        fragmentShader: fragmentShader,
+        wireframe: true,
+        uniforms: {
+            uTime: { value: 0 },
+            uMouse: { value: new THREE.Vector2(0, 0) }
+        }
     });
+
     const plane = new THREE.Mesh(geometry, material);
     plane.rotation.x = -Math.PI / 2;
     scene.add(plane);
 
-    const originalPositions = plane.geometry.attributes.position.array.slice();
     const clock = new THREE.Clock();
 
     const mouse = new THREE.Vector2(0, 0);
@@ -853,20 +889,10 @@
         mouse.x += (targetMouse.x - mouse.x) * 0.05;
         mouse.y += (targetMouse.y - mouse.y) * 0.05;
 
-        const positions = plane.geometry.attributes.position.array;
-        const mouseWorld = new THREE.Vector2(mouse.x * 10, mouse.y * 10);
+        // Update uniforms instead of iterating vertices on CPU
+        material.uniforms.uTime.value = t;
+        material.uniforms.uMouse.value.set(mouse.x * 10, mouse.y * 10);
 
-        for (let i = 0; i < positions.length; i += 3) {
-            const x = originalPositions[i];
-            const y = originalPositions[i + 1];
-            const baseWave = Math.sin(x * 0.5 + t * 0.5) * 0.1 + Math.sin(y * 0.5 + t * 0.5) * 0.1;
-            const dist = new THREE.Vector2(x, y).distanceTo(mouseWorld);
-            const influence = Math.max(0, 1 - dist / 5);
-            const ripple = Math.sin(dist * 2 - t * 2) * influence * 0.3;
-            positions[i + 2] = baseWave + ripple;
-        }
-
-        plane.geometry.attributes.position.needsUpdate = true;
         renderer.render(scene, camera);
         requestAnimationFrame(animate);
     }

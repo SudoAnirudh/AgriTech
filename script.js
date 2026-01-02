@@ -29,6 +29,18 @@ document.addEventListener("DOMContentLoaded", function () {
     return text.toLowerCase().replace(/\s+/g, ' ').trim();
   }
 
+  /**
+   * Debounce utility to limit function execution rate.
+   * Helps performance by reducing search calculations during rapid typing.
+   */
+  function debounce(func, wait) {
+    let timeout;
+    return function(...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+  }
+
   function showLiveSuggestions(query) {
     if (!query) {
       liveSuggestList.style.display = 'none';
@@ -70,8 +82,13 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   if (searchInput) {
+    // Optimization: Debounce search input to prevent expensive calculations on every keystroke
+    const debouncedSearch = debounce((text) => {
+      showLiveSuggestions(text);
+    }, 300);
+
     searchInput.addEventListener('input', function(e) {
-      showLiveSuggestions(searchInput.value.trim());
+      debouncedSearch(searchInput.value.trim());
     });
     searchInput.addEventListener('focus', function() {
       showLiveSuggestions(searchInput.value.trim());

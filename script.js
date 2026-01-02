@@ -15,14 +15,12 @@ document.addEventListener("DOMContentLoaded", function () {
      { name: 'Crop Monitoring', keywords: ['crop', 'monitoring', 'smart crop', 'calendar', 'plan', 'field', 'growth', 'season', 'timing', 'date', 'schedule', 'observe', 'track', 'yield', 'harvest', 'product', 'products', 'technology', 'tech', 'tools', 'equipment', 'sensor', 'sensors', 'iot', 'device', 'devices', 'monitor', 'detect'], url: 'crop.html' },
   { name: 'Crop Calendar', keywords: ['calendar', 'crop', 'season', 'schedule', 'timing', 'date', 'month', 'year', 'timeline', 'planting', 'harvest', 'cycle', 'product', 'products'], url: 'cropCalendar.html' },
      { name: 'Farmer', keywords: ['farmer', 'farmers', 'farming', 'grower', 'agriculture', 'seed', 'plant', 'producer', 'rural', 'village', 'community', 'product', 'products', 'technology', 'tech', 'tools', 'equipment', 'sensor', 'sensors', 'iot', 'device', 'devices', 'monitor', 'detect'], url: 'farmer.html' },
-  { name: 'Supply Chain', keywords: ['supply', 'chain', 'distribution', 'logistics', 'transport', 'delivery', 'network', 'route', 'shipment', 'product', 'products', 'technology', 'tech', 'tools', 'equipment'], url: 'supply-chain.html' },
-     { name: 'Supply Chain', keywords: ['supply', 'chain', 'distribution', 'logistics', 'transport', 'delivery', 'network', 'route', 'shipment', 'product', 'products', 'technology', 'tech', 'tools', 'equipment', 'sensor', 'sensors', 'iot', 'device', 'devices', 'monitor', 'detect'], url: 'supply-chain.html' },
-  { name: 'Sustainable Farming', keywords: ['sustainable', 'farming', 'eco', 'green', 'organic', 'environment', 'nature', 'earth', 'friendly', 'renewable', 'technology', 'tech', 'innovation'], url: 'sustainable-farming.html' },
-  { name: 'Marketplace', keywords: ['market', 'marketplace', 'store', 'buy', 'sell', 'shop', 'purchase', 'trade', 'exchange', 'commerce', 'product', 'products', 'technology', 'tech', 'tools', 'equipment'], url: 'marketplace.html' },
+    { name: 'Supply Chain', keywords: ['supply', 'chain', 'distribution', 'logistics', 'transport', 'delivery', 'network', 'route', 'shipment', 'product', 'products', 'technology', 'tech', 'tools', 'equipment', 'sensor', 'sensors', 'iot', 'device', 'devices', 'monitor', 'detect'], url: 'supply-chain.html' },
+    { name: 'Sustainable Farming', keywords: ['sustainable', 'farming', 'eco', 'green', 'organic', 'environment', 'nature', 'earth', 'friendly', 'renewable', 'technology', 'tech', 'innovation'], url: 'sustainable-farming.html' },
+    { name: 'Marketplace', keywords: ['market', 'marketplace', 'store', 'buy', 'sell', 'shop', 'purchase', 'trade', 'exchange', 'commerce', 'product', 'products', 'technology', 'tech', 'tools', 'equipment'], url: 'marketplace.html' },
     { name: 'Financial Support', keywords: ['financial', 'insurance', 'support', 'loan', 'money', 'fund', 'grant', 'aid', 'credit', 'finance'], url: 'financial-support.html' },
     { name: 'AI Assistant', keywords: ['chat', 'ai', 'assistant', 'bot', 'help', 'virtual', 'support', 'question', 'ask', 'guide'], url: 'chat.html' },
     { name: 'Contact', keywords: ['contact', 'email', 'help', 'reach', 'connect', 'call', 'message', 'query', 'inquiry'], url: 'contact.html' },
-    // Add more as needed
   ];
 
   function normalize(text) {

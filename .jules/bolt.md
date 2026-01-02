@@ -1,0 +1,3 @@
+## 2024-05-22 - [Optimized Three.js Animation]
+**Learning:** The background animation in `index.html` was calculating vertex positions for a 40x40 plane (1600+ vertices) every frame on the CPU using JavaScript. This causes unnecessary CPU usage and overhead transferring data to the GPU.
+**Action:** Moved the wave and ripple calculation logic to a Vertex Shader. This offloads the work to the GPU, which is massively parallel and efficient for this task, freeing up the CPU for other tasks and eliminating the per-frame data transfer. Using `THREE.ShaderMaterial` instead of updating `geometry.attributes.position` manually.

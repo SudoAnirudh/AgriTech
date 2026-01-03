@@ -861,7 +861,10 @@
             const x = originalPositions[i];
             const y = originalPositions[i + 1];
             const baseWave = Math.sin(x * 0.5 + t * 0.5) * 0.1 + Math.sin(y * 0.5 + t * 0.5) * 0.1;
-            const dist = new THREE.Vector2(x, y).distanceTo(mouseWorld);
+            // Bolt: Optimized to avoid allocating new THREE.Vector2(x, y) in every iteration
+            const dx = x - mouseWorld.x;
+            const dy = y - mouseWorld.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
             const influence = Math.max(0, 1 - dist / 5);
             const ripple = Math.sin(dist * 2 - t * 2) * influence * 0.3;
             positions[i + 2] = baseWave + ripple;
